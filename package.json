@@ -1,0 +1,27 @@
+{
+  "name": "shopping-site",
+  "version": "1.0.0",
+  "description": "Project to create a simple shopping website.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/space-schnoodle/shopping-site.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/space-schnoodle/shopping-site/issues"
+  },
+  "homepage": "https://github.com/space-schnoodle/shopping-site#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "express": "^4.17.1"
+  }
+}
