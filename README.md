@@ -12,3 +12,9 @@ Presented by my favorite Udemy teacher :D
 - Uses NodeJS version 14.11.0.
 
 
+## Future Steps
+
+- Start working with databases and not storage in files.
+
+
+
