@@ -12,9 +12,15 @@ Presented by my favorite Udemy teacher :D
 - Uses NodeJS version 14.11.0.
 
 
-## Future Steps
+## Current Steps
 
 - Start working with databases and not storage in files.
 
+- Download MySQL and workbench. (https://dev.mysql.com/downloads/)
+- Install a new package:
+    - npm install mysql2
+- Install sequelize
 
+## Future state
 
+- Change database, use MongoDb instead of mySQL.
