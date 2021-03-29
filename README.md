@@ -10,9 +10,10 @@ Presented by my favorite Udemy teacher :D
 ## Tech Stack
 
 - Uses NodeJS version 14.11.0.
+- MongoDB
 
 
-## Current Steps
+## If mysql
 
 - Start working with databases and not storage in files.
 
@@ -21,6 +22,9 @@ Presented by my favorite Udemy teacher :D
     - npm install mysql2
 - Install sequelize
 
-## Future state
+## Soon
 
-- Change database, use MongoDb instead of mySQL.
+- Authentication
+- Authorization
+
+
