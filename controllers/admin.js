@@ -1,5 +1,20 @@
 const Product = require('../models/product');
 
+exports.getProducts = (req, res, next) => {
+    Product
+        .fetchAll()
+        .then(products => {
+            res.render('admin/products', { 
+                products, 
+                pageTitle: 'Admin Products', 
+                path: '/admin/products'
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+};
+
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', { 
         pageTitle: 'Add Product', 
@@ -13,32 +28,28 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-
-    // magic method provided by sequelize and our setted relations
-    req.user.createProduct({
-        title,
-        price,
-        imageUrl,
-        description
-    }).then(() => {
-        console.log('Product Created.');
-        res.redirect('/admin/products');
-    }).catch(error => {
-        console.log(error);
-    });
+    const product = new Product(title, price, description, imageUrl, null, req.user._id);
+    
+    product
+        .save()
+        .then(() => {
+            console.log('Product Created.');
+            res.redirect('/admin/products');
+        }).catch(error => {
+            console.log(error);
+        });
 };
 
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
-    if (!editMode) {
+    if ( !editMode ) {
         return res.redirect('/');
     }
     const productId = req.params.productId;
-    req.user
-        .getProducts({ where: { id: productId }})
-        .then(products => {
-            const product = products[0];
-            if (!product) {
+    Product
+        .findById(productId)
+        .then(product => {
+            if ( !product ) {
                 return res.redirect('/');
             }
             res.render('admin/edit-product', { 
@@ -48,7 +59,9 @@ exports.getEditProduct = (req, res, next) => {
                 product
              });
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+        });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -57,48 +70,34 @@ exports.postEditProduct = (req, res, next) => {
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDescription = req.body.description;
-    Product
-        .findByPk(productId)
-        .then(product => {
-            product.title = updatedTitle;
-            product.imageUrl = updatedImageUrl;
-            product.price = +updatedPrice;
-            product.description = updatedDescription;
-            return product.save();
-        })
+    const product = new Product(
+        updatedTitle,
+        updatedPrice,
+        updatedDescription,
+        updatedImageUrl,
+        productId
+    );    
+    product
+        .save()
         .then(() => {
             console.log('Product updated.');
             res.redirect('/admin/products');
         })
-        .catch(error=> console.log(error));
-};
-
-exports.getProducts = (req, res, next) => {
-    req.user
-        .getProducts()
-        .then(products => {
-            res.render('admin/products', { 
-                products, 
-                pageTitle: 'Admin Products', 
-                path: '/admin/products'
-            });
-        })
-        .catch(error => {
+        .catch(error=> {
             console.log(error);
-        }); 
+        });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
     const productId = req.body.productId;
     Product
-        .findByPk(productId)
-        .then(product => {
-            return product.destroy();
-        })
+        .deleteById(productId)
         .then(() => {
             console.log('Product deleted.');
             res.redirect('/admin/products');
         })
-        .catch( error => console.log(error));
+        .catch( error => {
+            console.log(error);
+        });
 };
 
